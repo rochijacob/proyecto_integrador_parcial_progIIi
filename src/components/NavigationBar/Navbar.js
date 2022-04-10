@@ -28,7 +28,7 @@ export class Navbar extends Component {
     return (
         <Layout>
         <Header className='header flex-menu'>
-        <Title level={3} style={{color: 'white', margin: 0}}>Rochis Super app</Title>
+        <Title level={3} style={{color: 'white', margin: 0}}>Movie App</Title>
         <div className='flex-menu' >
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']}>
             <Menu.Item icon={<AppstoreOutlined />} key='0'></Menu.Item>
