@@ -39,16 +39,17 @@ export class Application extends Component {
         console.log('state', this.state)
     }
 
-    grid(){
-        this.setState({
+    changeDirection(){
+        if (this.state.cards === false) {
+                 this.setState({
             cards: true
-        })
-    }
+        })   
+        } else {
+            this.setState({
+                cards: false
+            })  
+        }
 
-    list(){
-        this.setState({
-            cards: false
-        })
     }
 
     pagination(pageNumber){
@@ -60,10 +61,7 @@ export class Application extends Component {
     }
 
     delete(id, title){
-        console.log('card', id)
         let notDeleted = this.state.datos.results.filter(movie => movie.id !== id)
-
-        console.log(notDeleted)
 
         this.setState(prevState => ({
             datos: {...prevState.datos, results: notDeleted}
@@ -72,11 +70,24 @@ export class Application extends Component {
         message.error(`Eliminaste ${title}`)
     }
 
+    search(query){
+        if(query !== ''){
+            let searchResults = this.state.datos.results.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase()))
+
+            this.setState(prevState => ({
+                datos: {...prevState.datos, results: searchResults}
+            }))  
+        } else {
+            this.fetchApi()
+        }
+
+    }
+
   render() {
     return (
         <div>
-        <Navbar />
-        <Cardscontainer datos={this.state.datos} pagination={(pageNumber) => this.pagination(pageNumber)} delete={(id, title)=> this.delete(id, title)}/>
+        <Navbar search={(query)=> this.search(query)} change={() => this.changeDirection()}/>
+        <Cardscontainer datos={this.state.datos} pagination={(pageNumber) => this.pagination(pageNumber)} delete={(id, title)=> this.delete(id, title)} cards={this.state.cards}/>
         </div>
     )
   }

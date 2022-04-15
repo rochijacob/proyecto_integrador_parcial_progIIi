@@ -16,3 +16,18 @@
     float: right;
     margin: 16px 0 16px 24px;
 }
+
+.flex-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 5% 10px;
+}
+
+@media(max-width: 600px) {
+    .flex-menu {
+        flex-direction: column;
+        height: 100%;
+    }
+
+}
