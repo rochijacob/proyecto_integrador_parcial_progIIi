@@ -23,8 +23,7 @@ export class Application extends Component {
                     loading: false,
                 })
             }
-        ).
-        catch(error => console.log(error))
+        ).catch(error => console.log(error))
     }
 
     componentDidMount(){
