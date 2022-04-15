@@ -4,12 +4,7 @@ import { Pagination, Spin, Typography } from 'antd'
 import SingleCard from './Card/SingleCard'
 
 
-const {Title} = Typography
-
 export class Cardscontainer extends Component {
-    constructor(props){
-        super(props)
-    }
 
   render() {
     const {results} = this.props.datos

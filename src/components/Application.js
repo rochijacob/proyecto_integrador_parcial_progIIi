@@ -15,9 +15,7 @@ export class Application extends Component {
     }
 
     fetchApi(){
-        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=e7a4550e419f47528855f7ca93b7dd7a&page=${this.state.page}&language=es`)
-        .then(response => response.json())
-        .then(
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=e7a4550e419f47528855f7ca93b7dd7a&page=${this.state.page}&language=es`).then(response => response.json()).then(
             data => {
                 this.setState({
                     datos: data,

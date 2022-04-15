@@ -9,10 +9,6 @@ import './Card.css'
 const {Meta} = Card
 
 export class SingleCard extends Component {
-  constructor(props){
-    super(props)
-  }
-  
   render() {
     return (
       <Card
