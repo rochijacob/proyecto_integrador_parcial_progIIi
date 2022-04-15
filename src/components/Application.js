@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Navbar from './NavigationBar/Navbar'
 import Cardscontainer from './CardsContainer/Cardscontainer'
+import { message } from 'antd'
 
 export class Application extends Component {
     constructor(props){
@@ -58,11 +59,24 @@ export class Application extends Component {
         })
     }
 
+    delete(id, title){
+        console.log('card', id)
+        let notDeleted = this.state.datos.results.filter(movie => movie.id !== id)
+
+        console.log(notDeleted)
+
+        this.setState(prevState => ({
+            datos: {...prevState.datos, results: notDeleted}
+        }))
+
+        message.error(`Eliminaste ${title}`)
+    }
+
   render() {
     return (
         <div>
         <Navbar />
-        <Cardscontainer datos={this.state.datos} pagination={(pageNumber) => this.pagination(pageNumber)}/>
+        <Cardscontainer datos={this.state.datos} pagination={(pageNumber) => this.pagination(pageNumber)} delete={(id, title)=> this.delete(id, title)}/>
         </div>
     )
   }

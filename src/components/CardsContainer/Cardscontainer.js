@@ -27,8 +27,8 @@ export class Cardscontainer extends Component {
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <Pagination defaultCurrent={this.props.page} total={5000} showSizeChanger={false} onChange={this.props.pagination}/>
           <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
-                        {results.map((result) => (
-              <SingleCard key={result.id} result={result}/>
+            {results.map((result) => (
+              <SingleCard key={result.id} result={result} delete={(id, title) => this.props.delete(id, title)}/>
           ))}
           </div>
 

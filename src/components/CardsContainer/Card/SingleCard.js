@@ -10,14 +10,14 @@ export class SingleCard extends Component {
   constructor(props){
     super(props)
   }
+  
   render() {
     return (
       <Card
       hoverable
       style={{ width: 270, margin: 10 }}
       cover={<img alt="example" src={`https://image.tmdb.org/t/p/w500/${this.props.result.poster_path}`}/>}
-      actions={[<Button>Eliminar Tarjeta</Button>]}
-      extra={<div>Delete</div>}
+      actions={[<Button danger={true} onClick={() => this.props.delete(this.props.result.id, this.props.result.title)}>Eliminar Tarjeta</Button>]}
       size={'small'}
       >
         <Meta title={this.props.result.title} description={<MovieDescription info={this.props.result}/>} />
