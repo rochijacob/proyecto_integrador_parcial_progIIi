@@ -9,10 +9,27 @@ import {
 import './Navbar.css'
 
 const {Header} = Layout
-const {Search} = Input
 const {Title} = Typography
 
 export class Navbar extends Component {
+  constructor(){ 
+    super();
+      //  Definimos los estados (memorias)
+    this.state = {
+        query:''
+    }
+}
+
+preventDefault(evento){
+  evento.preventDefault()
+}
+
+querySearch(event){
+  console.log(event)
+  this.setState({
+      query: event.target.value
+  },()=> this.props.search(this.state.query))
+}
 
   render() {
     return (
@@ -24,7 +41,7 @@ export class Navbar extends Component {
             <Menu.Item icon={<AppstoreOutlined />} key='0' onClick={() => this.props.change()}></Menu.Item>
             <Menu.Item icon={<BarsOutlined />} key='1' onClick={() => this.props.change()}></Menu.Item>
         </Menu>
-        <Search placeholder="input search text" onSearch={(value) => this.props.search(value)} enterButton style={{maxWidth: 300, padding: '10px 0 10px'}} />
+        <Input addonAfter={'Buscar'} placeholder='Busca una pelicula' value={this.state.query} onChange={(query)=> this.querySearch(query)} allowClear={true} />
         </div>
       </Header>
       </Layout>

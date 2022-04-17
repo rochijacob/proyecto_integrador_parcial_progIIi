@@ -7,7 +7,8 @@ export class Application extends Component {
     constructor(props){
         super(props)
         this.state = {
-            datos: '',
+            initialData: '',
+            modifiedData: '',
             cards: true,
             page: 1,
             loading: false,
@@ -17,11 +18,20 @@ export class Application extends Component {
     fetchApi(){
         fetch(`https://api.themoviedb.org/3/movie/popular?api_key=e7a4550e419f47528855f7ca93b7dd7a&page=${this.state.page}&language=es`).then(response => response.json()).then(
             data => {
-                this.setState({
-                    datos: data,
-                    page: data.page,
-                    loading: false,
-                })
+                if(this.state.initialData === '') {
+                    this.setState({
+                        initialData: data,
+                        modifiedData: data,
+                        loading: false,
+                        page: this.state.page + 1,
+                    })
+                } else {
+                    this.setState(prevState => ({
+                        initialData: {...prevState.initialData, results: [...this.state.initialData.results, ...data.results]},
+                        modifiedData: {...prevState.modifiedData, results: [...this.state.initialData.results, ...data.results]},
+                        page: this.state.page + 1
+                    }))
+                }
             }
         ).catch(error => console.log(error))
     }
@@ -32,7 +42,7 @@ export class Application extends Component {
     }
 
     componentDidUpdate(){
-        console.log(this.state.datos)
+        console.log(this.state.initialData)
         console.log('state', this.state)
     }
 
@@ -49,42 +59,34 @@ export class Application extends Component {
 
     }
 
-    pagination(pageNumber){
-        this.setState({
-            page: pageNumber
-        }, () => {
-            this.fetchApi()
-        })
+    bringMore(){
+        this.fetchApi()
     }
 
     delete(id, title){
-        let notDeleted = this.state.datos.results.filter(movie => movie.id !== id)
+        let notDeleted = this.state.modifiedData.results.filter(movie => movie.id !== id)
 
         this.setState(prevState => ({
-            datos: {...prevState.datos, results: notDeleted}
+            initialData: {...prevState.modifiedData, results: notDeleted}
         }))
 
         message.error(`Eliminaste ${title}`)
     }
 
     search(query){
-        if(query !== ''){
-            let searchResults = this.state.datos.results.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase()))
+        console.log('query', query)
+        let searchResults = this.state.initialData.results.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase()))
 
-            this.setState(prevState => ({
-                datos: {...prevState.datos, results: searchResults}
+        this.setState(prevState => ({
+                modifiedData: {...prevState.modifiedData, results: searchResults}
             }))  
-        } else {
-            this.fetchApi()
-        }
-
     }
 
   render() {
     return (
         <div>
         <Navbar search={(query)=> this.search(query)} change={() => this.changeDirection()}/>
-        <Cardscontainer datos={this.state.datos} pagination={(pageNumber) => this.pagination(pageNumber)} delete={(id, title)=> this.delete(id, title)} cards={this.state.cards}/>
+        <Cardscontainer datos={this.state.modifiedData} delete={(id, title)=> this.delete(id, title)} cards={this.state.cards} bringMore={() => this.bringMore()}/>
         </div>
     )
   }
