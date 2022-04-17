@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 //Typography
-import { Pagination, Spin, Button } from 'antd'
+import { Spin, Button } from 'antd'
 import SingleCard from './Card/SingleCard'
 
 
