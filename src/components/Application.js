@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
 import Navbar from './NavigationBar/Navbar'
 import Cardscontainer from './CardsContainer/Cardscontainer'
-import { message } from 'antd'
+import { message, Spin } from 'antd'
 
 export class Application extends Component {
-    constructor(props){
-        super(props)
+    constructor(){
+        super()
         this.state = {
             initialData: '',
             modifiedData: '',
             cards: true,
             page: 1,
-            loading: false,
         }
     }
 
@@ -22,7 +21,6 @@ export class Application extends Component {
                     this.setState({
                         initialData: data,
                         modifiedData: data,
-                        loading: false,
                         page: this.state.page + 1,
                     })
                 } else {
@@ -37,7 +35,6 @@ export class Application extends Component {
     }
 
     componentDidMount(){
-        this.setState({loading: true})
         this.fetchApi()
     }
 
@@ -87,7 +84,7 @@ export class Application extends Component {
     return (
         <div>
         <Navbar search={(query)=> this.search(query)} change={() => this.changeDirection()}/>
-        <Cardscontainer datos={this.state.modifiedData} delete={(id, title)=> this.delete(id, title)} cards={this.state.cards} bringMore={() => this.bringMore()}/>
+        {this.state.modifiedData != '' ? <Cardscontainer datos={this.state.modifiedData} delete={(id, title)=> this.delete(id, title)} cards={this.state.cards} bringMore={() => this.bringMore()}/> : <div style={{display: 'flex', alignContent: 'center', justifyContent: 'center'}}><Spin /></div>}
         </div>
     )
   }
