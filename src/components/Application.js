@@ -67,7 +67,8 @@ export class Application extends Component {
         let notDeleted = this.state.modifiedData.results.filter(movie => movie.id !== id)
 
         this.setState(prevState => ({
-            initialData: {...prevState.modifiedData, results: notDeleted}
+            initialData: {...prevState.modifiedData, results: notDeleted},
+            modifiedData: {...prevState.modifiedData, results: notDeleted}
         }))
 
         message.error(`Eliminaste ${title}`)
